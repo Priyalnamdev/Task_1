@@ -6,9 +6,6 @@ from datetime import datetime
 app = Flask(__name__)
 CORS(app)
 
-# ---------------- MYSQL CONFIG ----------------
-# REAL PASSWORD: Pri#yal%1*8nam_04$
-# ENCODED PASSWORD: Pri%23yal%251%2A8nam_04%24
 
 app.config["SQLALCHEMY_DATABASE_URI"] = (
     "mysql+pymysql://root:Pri%23yal%251%2A8nam_04%24@localhost/comment_db"
@@ -16,8 +13,6 @@ app.config["SQLALCHEMY_DATABASE_URI"] = (
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
-
-# ---------------- MODELS ----------------
 
 class Task(db.Model):
     __tablename__ = "tasks"
@@ -32,8 +27,6 @@ class Comment(db.Model):
     content = db.Column(db.String(500), nullable=False)
     task_id = db.Column(db.Integer, db.ForeignKey("tasks.id"), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-
-# ---------------- CREATE TABLES ----------------
 
 with app.app_context():
     db.create_all()
@@ -63,7 +56,6 @@ def create_comment(task_id):
     db.session.commit()
     return jsonify({"id": comment.id, "content": comment.content}), 201
 
-# GET COMMENTS
 @app.route("/tasks/<int:task_id>/comments", methods=["GET"])
 def get_comments(task_id):
     comments = Comment.query.filter_by(task_id=task_id).all()
@@ -76,3 +68,4 @@ def get_comments(task_id):
 
 if __name__ == "__main__":
     app.run(debug=True)
+
