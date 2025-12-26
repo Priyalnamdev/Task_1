@@ -8,7 +8,7 @@ CORS(app)
 
 
 app.config["SQLALCHEMY_DATABASE_URI"] = (
-    "mysql+pymysql://root:Pri%23yal%251%2A8nam_04%24@localhost/comment_db"
+    "mysql+pymysql://root:Password@localhost/comment_db"
 )
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
@@ -68,4 +68,5 @@ def get_comments(task_id):
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
